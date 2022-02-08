@@ -9,10 +9,10 @@ Bullet Journal(bujo) is a simple bash linux script with a few support files.  It
 bare bones digital equvilant of a bullet journal for terminal.  It automatically color
 codes items based on syntax and can migrate tasks and meeting based on the date.
 
-Run install.sh as super user(for the nano config file) to setup or
-jsut read the install and put the files in your self!
+Download the tar file, and run 'sudo install.sh' to setup or
+just read the install and put the files in your self!
 
-run 'bujo' to start right away or
+After run 'bujo' to start right away or
 'bujo -x' to run the tutorial program
 
 Usage: bujo.sh [OPTION]
