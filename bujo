@@ -1,0 +1,184 @@
+#!/bin/bash
+# File: bujo.sh
+# Date: 1.14.2020
+# Desc: Task Organization Script
+# Ver:1.0
+# author:nicholai.best@gmail.com
+new_day (){
+	#copy forward all unfinshed tasks to end of todo file
+
+	echo "Starting new day..."
+	# make a new /tmp/Migration.bujo file
+	echo "===Review these items===(delete this line):" >>/tmp/Migration.bujo
+	# find all import tasks in todo, append them to a tmp file
+	grep '^* '   ~/.bujo/todo.bujo >>/tmp/Migration.bujo
+	grep '^! '   ~/.bujo/todo.bujo >>/tmp/Migration.bujo
+	grep '^@'   ~/.bujo/todo.bujo >>/tmp/Migration.bujo
+	grep "^M `date +%m-%d-%Y`" ~/.bujo/todo.bujo >>/tmp/Migration.bujo
+	grep ">>>`date +%m-%d-%Y`>>>" ~/.bujo/todo.bujo >>/tmp/Migration.bujo
+	# show tmpfile for review
+	nano /tmp/Migration.bujo
+
+	#migrate all tasks left undone before today, mark them with >> to grey them out
+	sed -i 's/^* />>* /' ~/.bujo/todo.bujo
+	sed -i 's/^! />>! /' ~/.bujo/todo.bujo
+	sed -i 's/^@/>>@/' ~/.bujo/todo.bujo
+
+	#add new date
+	echo -n "===`date +%m-%d-%Y`" >> ~/.bujo/todo.bujo
+	echo "===" >> ~/.bujo/todo.bujo
+	#Copy migrating items to todo.bujo
+	cat /tmp/Migration.bujo>>  ~/.bujo/todo.bujo
+	rm /tmp/Migration.bujo
+	#copy daily tasks to tho todo file
+	cat  ~/.bujo/daily.bujo >> ~/.bujo/todo.bujo
+
+	#open todo file
+	nano +9999 ~/.bujo/todo.bujo
+}
+
+print_all(){
+	echo "Important Tasks:"
+	tput setaf 1
+	tput bold
+	grep '^! '  ~/.bujo/todo.bujo
+	echo
+	tput setaf 3
+	echo "Tasks:"
+	grep '^* '  ~/.bujo/todo.bujo
+	echo
+	tput setaf 5
+	echo "Meetings:"
+	grep '^M'  ~/.bujo/todo.bujo|sort
+	echo
+	tput setaf 7
+	tput sgr0
+	echo "Low Priority:"
+	grep '^*l '  ~/.bujo/todo.bujo
+	echo
+	echo "Future Tasks:"
+	grep "^>>>" ~/.bujo/todo.bujo
+}
+print_summary(){
+	echo "Summary `date +%m-%d-%Y`:"
+	grep '^! ' ~/.bujo/todo.bujo > /tmp/bujotmp
+	wc -l /tmp/bujotmp > /tmp/bujotmp1
+	read lines fielname< /tmp/bujotmp1
+	tput setaf 1
+	tput bold
+	echo " * $lines important."
+	tput setaf 7
+	tput sgr0
+
+	grep '^M ' ~/.bujo/todo.bujo > /tmp/bujotmp
+	wc -l /tmp/bujotmp > /tmp/bujotmp1
+	read lines fielname< /tmp/bujotmp1
+	echo " * $lines meetings."
+
+	grep '^* ' ~/.bujo/todo.bujo > /tmp/bujotmp
+	wc -l /tmp/bujotmp > /tmp/bujotmp1
+	read lines fielname< /tmp/bujotmp1
+	echo " * $lines tasks."
+
+	grep '^*l ' ~/.bujo/todo.bujo > /tmp/bujotmp
+	wc -l /tmp/bujotmp > /tmp/bujotmp1
+	read lines fielname< /tmp/bujotmp1
+	echo " * $lines low priority."
+	rm /tmp/bujotmp1 /tmp/bujotmp
+
+	echo 
+	echo "Today's meetings:"
+	grep "^M `date +%m-%d-%Y`" ~/.bujo/todo.bujo
+	echo
+	echo "Important & due tasks:"
+	tput setaf 1
+	tput bold
+	grep ">>>`date +%m-%d-%Y`>>>" ~/.bujo/todo.bujo
+	grep "^! " ~/.bujo/todo.bujo
+	tput setaf 7
+	tput sgr0
+}
+
+
+if [ -n "$1" ]; then
+while getopts "aitlnEmxdes" opt; do
+  case $opt in
+    n)
+		new_day
+    ;;
+    i)
+	grep '^! ' ~/.bujo/todo.bujo
+    ;;
+    t)
+	grep '^* ' ~/.bujo/todo.bujo
+    ;;
+    l)
+	grep '^*l ' ~/.bujo/todo.bujo
+    ;;
+    m)
+	grep '^M ' ~/.bujo/todo.bujo|sort
+    ;;
+    e)
+	grep '^@' ~/.bujo/todo.bujo
+    ;;
+    E)
+	grep '^?' ~/.bujo/todo.bujo
+    ;;
+    a)
+		print_all
+    ;;
+    d)
+	nano  ~/.bujo/daily.bujo
+    ;;
+    x)
+	cp ~/.bujo/example.bujo /tmp/example.bujo
+	nano  /tmp/example.bujo
+    ;;
+    s)
+		print_summary
+    ;;
+    \?)
+	echo "Invalid option -$OPTARG" >&2
+	echo "Usage: bujo.sh [OPTION]"
+	echo " use no option to open journal"
+	echo
+	echo " -s	print summary"
+	echo " -a	print all tasks"
+	echo
+	echo " -i	print ! tasks"
+	echo " -t	print * tasks"
+	echo " -l	print *l tasks"
+	echo " -m	print meetings"
+	echo " -E	print things to be explored"
+	echo " -e	print emails"
+	echo
+	echo " -n	start new day"
+	echo " -d 	edit daily tasks"
+	echo " -h	print this text"
+	echo " -x 	open example format"
+    ;;
+  esac
+done
+
+else
+	nano +9999 ~/.bujo/todo.bujo
+fi
+
+subcommand=$1; shift  # Remove 'pip' from the argument list
+case "$subcommand" in
+  # Parse options to the install sub command
+  task)
+	echo -n "* " >> ~/.bujo/todo.bujo # Remove 'install' from the argument list
+	echo $@ >> ~/.bujo/todo.bujo # Remove 'install' from the argument list
+	echo "Added task:"$@
+	;;
+  summary)
+	print_summary
+	;;
+  all)
+	print_all
+	;;
+  new-day)
+	new_day
+  ;;
+esac

@@ -1,0 +1,193 @@
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~		Bujo demostration file			     ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+This is an example file for the bullet journal format for nano.
+This example is temporay file and will not change, so feel 
+free to experiment. Next time 'bujo -x' is run all info found 
+here will be the same.  
+
+Attemped the following exersizes where you see: "---TRY IT---"
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+			Overview
+
+In a bullet journal a symbol in front of the line denotes what 
+it is for easy reading.  The difference in the '.bujo' files 
+is that they color code themselves too. Changing the symbol will
+make it fast and easy to look over what you have done and what 
+you have left todo.  Using the 'bujo' command will give you 
+access to the main task list, but any file that uses the .bujo
+extension will follow most of the rules you will see below.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+			Tasks
+
+There are 4 types of tasks:
+1)! Important tasks
+	This desination is for things that need done ASAP, if
+	it is a must-do.
+2)* Normal tasks
+	For anything that needs done in the next few days.
+3) *l low priority tasks
+	This is for things that dont need done right away, 
+	but you still need to make it happen. If you can put 
+	it off a few days or a week use this one.
+4) ?: Idea or exploratory
+	These are not nessisarily tasks, maybe an idea you want to
+	come back to later, or some thing you want to check out 
+	some other time like a podcast someone told you about
+	or a song you heard on the radio, or a project for work 
+	that would be good during some down time.
+
+---TRY IT---
+-Color code the following tasks
+
+Make me a normal task.
+Make me important, this you want to take care of soon!
+I am idea... read me later
+I am not an important task
+
+There is also a meeting color by using the 'M' at the start 
+of a line with or without a date, more on that later...
+M 01-01-2020 Coffee w/ dave
+M Coffee w/ dave
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+			Completeing or Canceling tasks
+
+When you complete a task, simple put an 'X' in front of the line
+Complete the finshed tasks
+
+---TRY IT---
+X * task finishede
+* complete me and I turn grey and dont draw attention to myself
+X * task finished example
+! Complete me too!
+
+If as task or event doesnt happen or isnt needed you can cancel it.
+Use "CX" to show a task was canceled.
+Place a "CX" in front of the line to see it disappear.
+---TRY IT---
+* I dont need to be done, cancel me and see what happens!
+
+The line above disappears, but isnt deleted, only hidden.
+If you need to read it, delete the 'C' to reveal it.
+---TRY IT---
+CX * Nothing very imporant but now you know and I wasnt a distraction
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+			Email Handling
+
+bujo has a coding system for emails to see what you have answered
+and what you need to complete and who you are waiting on answering you.
+This can be very helpful if you send a lot of emails and are waiting
+on replies.
+
+It works in the following 3 stages:
+
+Step 1. Email needs composed
+	This is how you denote that you need to send an email to someone
+Put the name first with the "at" sign, gree lets you know its an email.
+Put any task after that, it can be high prioity or normal.  
+@JohnD * Do you have grapes?
+or
+@JohnD ! Do you have grapes?!
+
+Step 2. Waiting on a response
+	When you send the email use 'X' on just the task.  This 
+will grey the task, so you know it has been done, but when you look 
+back through and you see a green recipient, you know they 
+have not responded to YOU.
+Ex2. @JohnD X * Do you have grapes?
+
+Step 3. Completed Email
+	Once you have your answer you can grey out the whole thing.
+Make sure you leave a note of what the reposnse was
+Ex3. X @JohnD * Do you have grapes? - he does not
+
+---TRY IT---
+Edit below to show you need to send an email to Nancy 
+and ask about oranges.  Once you edit it see how it comments out
+@Name * email content
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+			Migration
+
+Migration is how you keep track of what you have done day-to-day.
+
+//Use '>>' to show a task wasnt canceled but was moved to the next day.
+This will look grey like it was conploeted or cancel to show that you
+dont need to preform an action on the item.//
+
+Migrate this task
+---TRY it---
+* migrate me!
+>> * migrated task
+
+The tasks that are mirgrated turn grey, you can still see what you 
+had planed, but they wont stand out.  Migration is important becasue
+it can show priority, and keep the important stuff at the foreforut 
+of attention.  If tasks get migraed more than a few times 
+prorably shouldn't be labeled ! high priority
+
+You can also delegate a tasks to another person.
+<<John D<< * delgated example to John
+Mark it complete when they are done.
+X <<John D<< *delgated example to John
+
+---TRY IT--- Assign this to Jamie and see it change
+* This task should be done by Jamie
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+			Start a new day
+
+The 'new day' function or 'bujo -n' is important for managing 
+long term projects.  Runing new day does thre things.
+
+1) It adds a date stamp at the bottom of you journal, that way 
+you know you are working on tasks on a particular date looking back
+
+2) It migrates your old tasks forward.  When you start a 
+'new day' you will see a list of everything incomplete
+so you can review what you need to do for the day. 
+Once you have started a new day you will need to mark the tasks
+above as mirgrated so you know that you put them off a day.
+
+Ony Some tasks will migrate forward,  bujo will show you a 
+list of any tasks that are left incomplete if they are:
+* normal tasks
+and ! important tasks 
+
+These tasks dont get copied forward:
+*l low priorty 
+and ?: explore 
+
+3) Lastly Bujo will add your "Daily tasks" to your list.  
+These are tasks you need to do every single days.  The list
+can be edited in "~./bujo/daily.bujo"
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+			Scheduleing & Meetings
+//Scheduling task is nice when you have things that dont need 
+attention till later.  Mark the date in front of the task using
+useing >>>MM-DD-YYY>>> format.//
+>>>02-15-2024>>> * This dont need done for a while!
+
+This will grey out the task but show that it is upcoming at some point.
+On the date listed the task will copy into your migration list when you 
+start a 'new day'
+
+---TRY IT--- try to migrate this for tomrrows date.
+* I need done christmas year 3000
+
+
+Meeting also can be mirgrated on a particular date using this 
+similar syntax:
+M 02-19-2021 Fight club
+
+This will compy forward on the date it is listed, but you 
+can still make a meeting on the day of without a date.
+M Fight Club
+
+NOTE: If the date is not in MM-DD-YYYY, 
+it will never move forward 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
