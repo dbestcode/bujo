@@ -1,15 +1,17 @@
 #!/bin/bash
 # File: bujo.sh
-# Date: 1.14.2020
+# Date: 2.14.2022
 # Desc: Task Organization Script
-# Ver:1.0
 # author:nicholai.best@gmail.com
-new_day (){
+new_day(){
 	#copy forward all unfinshed tasks to end of todo file
-
 	echo "Starting new day..."
+	sleep 1
+	echo "Migrating unfinshed tasks..."
+	sleep 1
 	# make a new /tmp/Migration.bujo file
-	echo "===Review these items===(delete this line):" >>/tmp/Migration.bujo
+	echo "# Review these items" >>/tmp/Migration.bujo
+	echo "# Lines with starting with '#' will be removed" >>/tmp/Migration.bujo
 	# find all import tasks in todo, append them to a tmp file
 	grep '^* '   ~/.bujo/todo.bujo >>/tmp/Migration.bujo
 	grep '^! '   ~/.bujo/todo.bujo >>/tmp/Migration.bujo
@@ -28,10 +30,10 @@ new_day (){
 	echo -n "===`date +%m-%d-%Y`" >> ~/.bujo/todo.bujo
 	echo "===" >> ~/.bujo/todo.bujo
 	#Copy migrating items to todo.bujo
-	cat /tmp/Migration.bujo>>  ~/.bujo/todo.bujo
+	grep -vE "^#" /tmp/Migration.bujo>>  ~/.bujo/todo.bujo
 	rm /tmp/Migration.bujo
 	#copy daily tasks to tho todo file
-	cat  ~/.bujo/daily.bujo >> ~/.bujo/todo.bujo
+	grep -vE "^#"  ~/.bujo/daily.bujo >> ~/.bujo/todo.bujo
 
 	#open todo file
 	nano +9999 ~/.bujo/todo.bujo
@@ -128,6 +130,9 @@ while getopts "aitlnEmxdes" opt; do
 		print_all
     ;;
     d)
+	clear
+	echo "Editing Daily List..."
+	sleep 2
 	nano  ~/.bujo/daily.bujo
     ;;
     x)
