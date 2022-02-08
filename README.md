@@ -5,8 +5,8 @@ Writen by ndbest
 nicholai.best@gmail.com
 -------------
 
-Bullet Journal(bujo) is a simple script with a few support files.  It is designed to be a 
-digital equvilant of a bullet journal for terminal.  It automatically color
+Bullet Journal(bujo) is a simple bash linux script with a few support files.  It is designed to be a 
+bare bones digital equvilant of a bullet journal for terminal.  It automatically color
 codes items based on syntax and can migrate tasks and meeting based on the date.
 
 Run install.sh as super user(for the nano config file) to setup or
