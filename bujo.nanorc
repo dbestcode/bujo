@@ -24,12 +24,12 @@ color brightgreen "".+"([[:space:]]|$)"
 icolor yellow "^[[:space:]]*i?color[[:space:]]*(bright)?(white|black|red|blue|green|yellow|magenta|cyan)?(,(white|black|red|blue|green|yellow|magenta|cyan))?\>"
 icolor magenta "^[[:space:]]*i?color\>" "\<(start|end)="
 
-# Comments
-color cyan "(^|[[:space:]]+)#.*$"
-color brightblue "^[[:space:]]*##.*$"
-
 # Trailing whitespace
 #color ,green "[[:space:]]+$"
+# Meeting
+color brightmagenta "M .*"
+#email to be returned
+color green "@.*"
 
 # task
 color yellow "\* .*"
@@ -37,14 +37,10 @@ color yellow "\* .*"
 color red "\*l .*"
 # important
 color brightred "! .*"
-# Meeting
-color brightmagenta "M .*"
 
 # explore
 color cyan "\?:.*"
 
-#email to be returned
-color red "@ .*"
 # schedule future
 color brightblack ">>.*"
 # delageted
@@ -53,6 +49,7 @@ color blue start="<<" end="<<"
 # completed
 color brightblack "X .*"
 color brightblack "X\*.*"
+color brightblack "X\!.*"
 color brightblack "X	.*"
 
 color black "CX .*"
@@ -64,3 +61,8 @@ color brightgreen start="===" end="==="
 #commented multiline
 color white start="//" end="//"
 
+color yellow start="\{" end="\}"
+
+# Comments
+color cyan "(^|[[:space:]]+)#.*$"
+color brightblue "^[[:space:]]*##.*$"
