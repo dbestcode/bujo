@@ -3,6 +3,8 @@
 # Date: 2.14.2022
 # Desc: Task Organization Script
 # author:nicholai.best@gmail.com
+
+# Run to start a new workday, migrates old tasks & adds dailys
 new_day(){
 	#copy forward all unfinshed tasks to end of todo file
 	echo "Starting new day..."
@@ -13,11 +15,11 @@ new_day(){
 	echo "# Review these items" >>/tmp/Migration.bujo
 	echo "# Lines with starting with '#' will be removed" >>/tmp/Migration.bujo
 	# find all import tasks in todo, append them to a tmp file
-	grep '^* '   ~/.bujo/todo.bujo >>/tmp/Migration.bujo
-	grep '^! '   ~/.bujo/todo.bujo >>/tmp/Migration.bujo
-	grep '^@'   ~/.bujo/todo.bujo >>/tmp/Migration.bujo
-	grep "^M `date +%m-%d-%Y`" ~/.bujo/todo.bujo >>/tmp/Migration.bujo
-	grep ">>>`date +%m-%d-%Y`>>>" ~/.bujo/todo.bujo >>/tmp/Migration.bujo
+	grep '^* '   ~/.bujo/todo.bujo |sort -d >>/tmp/Migration.bujo
+	grep '^! '   ~/.bujo/todo.bujo |sort -d >>/tmp/Migration.bujo
+	grep '^@'   ~/.bujo/todo.bujo |sort -d >>/tmp/Migration.bujo
+	grep "^M `date +%m-%d-%Y`" ~/.bujo/todo.bujo |sort -d >>/tmp/Migration.bujo
+	grep ">>>`date +%m-%d-%Y`>>>" ~/.bujo/todo.bujo |sort -d >>/tmp/Migration.bujo
 	# show tmpfile for review
 	nano /tmp/Migration.bujo
 
@@ -63,7 +65,7 @@ print_all(){
 }
 print_summary(){
 	echo "Summary `date +%m-%d-%Y`:"
-	grep '^! ' ~/.bujo/todo.bujo > /tmp/bujotmp
+	grep '^! ' ~/.bujo/todo.bujo |sort -d > /tmp/bujotmp
 	wc -l /tmp/bujotmp > /tmp/bujotmp1
 	read lines fielname< /tmp/bujotmp1
 	tput setaf 1
@@ -72,17 +74,17 @@ print_summary(){
 	tput setaf 7
 	tput sgr0
 
-	grep '^M ' ~/.bujo/todo.bujo > /tmp/bujotmp
+	grep '^M ' ~/.bujo/todo.bujo |sort -d > /tmp/bujotmp
 	wc -l /tmp/bujotmp > /tmp/bujotmp1
 	read lines fielname< /tmp/bujotmp1
 	echo " * $lines meetings."
 
-	grep '^* ' ~/.bujo/todo.bujo > /tmp/bujotmp
+	grep '^* ' ~/.bujo/todo.bujo |sort -d > /tmp/bujotmp
 	wc -l /tmp/bujotmp > /tmp/bujotmp1
 	read lines fielname< /tmp/bujotmp1
 	echo " * $lines tasks."
 
-	grep '^*l ' ~/.bujo/todo.bujo > /tmp/bujotmp
+	grep '^*l ' ~/.bujo/todo.bujo |sort -d > /tmp/bujotmp
 	wc -l /tmp/bujotmp > /tmp/bujotmp1
 	read lines fielname< /tmp/bujotmp1
 	echo " * $lines low priority."
@@ -103,31 +105,41 @@ print_summary(){
 
 
 if [ -n "$1" ]; then
-while getopts "aitlnEmxdes" opt; do
+while getopts "baitlnEmxdes" opt; do
   case $opt in
     n)
-		new_day
+	new_day
+    ;;
+    b)
+	echo "$2" >> ~/.bujo/todo.bujo
     ;;
     i)
-	grep '^! ' ~/.bujo/todo.bujo
+	grep '^! ' ~/.bujo/todo.bujo|sort -d
     ;;
     t)
-	grep '^* ' ~/.bujo/todo.bujo
+	grep '^* ' ~/.bujo/todo.bujo|sort -d
     ;;
     l)
-	grep '^*l ' ~/.bujo/todo.bujo
+	# print low priority tasks & mirgrate them
+	grep '^*l ' ~/.bujo/todo.bujo|sort -d
+	# put in a tmp file
+	grep '^*l ' ~/.bujo/todo.bujo|sort -d > /tmp/bujotmp
+	#remove entries from above and append tmp file to todo list
+	sed -i 's/^*l />>*l /' ~/.bujo/todo.bujo
+	cat /tmp/bujotmp >>  ~/.bujo/todo.bujo
+	rm /tmp/bujotmp
     ;;
     m)
-	grep '^M ' ~/.bujo/todo.bujo|sort
+	grep '^M ' ~/.bujo/todo.bujo|sort -d
     ;;
     e)
-	grep '^@' ~/.bujo/todo.bujo
+	grep '^@' ~/.bujo/todo.bujo|sort -d
     ;;
     E)
-	grep '^?' ~/.bujo/todo.bujo
+	grep '^?' ~/.bujo/todo.bujo|sort -d
     ;;
     a)
-		print_all
+	print_all
     ;;
     d)
 	clear
@@ -140,13 +152,16 @@ while getopts "aitlnEmxdes" opt; do
 	nano  /tmp/example.bujo
     ;;
     s)
-		print_summary
+	print_summary
     ;;
     \?)
 	echo "Invalid option -$OPTARG" >&2
 	echo "Usage: bujo.sh [OPTION]"
 	echo " use no option to open journal"
 	echo
+	echo " -b	add to todo list"
+	echo " 	bujo -b '* a new task'"
+	echo 
 	echo " -s	print summary"
 	echo " -a	print all tasks"
 	echo
