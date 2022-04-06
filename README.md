@@ -2,10 +2,9 @@
 -------------
 
 Writen by ndbest
-nicholai.best@gmail.com
 -------------
 
-Bullet Journal(bujo) is a simple bash linux script with a few support files.  It is designed to be a 
+Bullet Journal(bujo) is a simple bash linux script with a few support files.  It is designed to be a
 bare bones digital equvilant of a bullet journal for terminal.  It automatically color
 codes items based on syntax and can migrate tasks and meeting based on the date.
 
@@ -24,6 +23,8 @@ Usage: bujo.sh [OPTION]
  -i	print ! tasks
  -t	print * tasks
  -l	print *l tasks
+	and migrates
+
  -m	print meetings
  -E	print things to be explored
  -e	print emails
