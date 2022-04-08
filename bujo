@@ -8,9 +8,7 @@
 new_day(){
 	#copy forward all unfinshed tasks to end of todo file
 	echo "Starting new day..."
-	sleep 1
 	echo "Migrating unfinshed tasks..."
-	sleep 1
 	# make a new /tmp/Migration.bujo file
 	echo "# Review these items" >>/tmp/Migration.bujo
 	echo "# Lines with starting with '#' will be removed" >>/tmp/Migration.bujo
@@ -105,7 +103,7 @@ print_summary(){
 
 
 if [ -n "$1" ]; then
-while getopts "baitlnEmxdes" opt; do
+while getopts "baitlnEmxHdes" opt; do
   case $opt in
     n)
 	new_day
@@ -141,6 +139,9 @@ while getopts "baitlnEmxdes" opt; do
     a)
 	print_all
     ;;
+    H)
+	nano +9999 ~/.bujo/todo.bujo
+    ;;
     d)
 	clear
 	echo "Editing Daily List..."
@@ -150,6 +151,7 @@ while getopts "baitlnEmxdes" opt; do
     x)
 	cp ~/.bujo/example.bujo /tmp/example.bujo
 	nano  /tmp/example.bujo
+	rm /tmp/example.bujo
     ;;
     s)
 	print_summary
@@ -174,14 +176,26 @@ while getopts "baitlnEmxdes" opt; do
 	echo
 	echo " -n	start new day"
 	echo " -d 	edit daily tasks"
+	echo " -H 	open the entire 'todo' file"
+	echo
 	echo " -h	print this text"
-	echo " -x 	open example format"
+	echo " -x 	open example tutoriral"
     ;;
   esac
 done
 
 else
-	nano +9999 ~/.bujo/todo.bujo
+	# grab every thing after the last '==='
+	tac ~/.bujo/todo.bujo | awk '!flag; /===/{flag = 1};' | tac > /tmp/today.bujo
+	nano /tmp/today.bujo
+	# copy only everything before the last '===' in to a tmp file
+	# over write makin todo and add newly edited day
+	tac ~/.bujo/todo.bujo |sed '1,/===/d'|tac > /tmp/tmp1.bujo
+	cat /tmp/tmp1.bujo > ~/.bujo/todo.bujo
+	cat /tmp/today.bujo >> ~/.bujo/todo.bujo
+	#remove tmp files
+	rm /tmp/today.bujo
+	rm /tmp/tmp1.bujo
 fi
 
 subcommand=$1; shift  # Remove 'pip' from the argument list

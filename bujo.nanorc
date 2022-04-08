@@ -1,68 +1,91 @@
-## Here is an example for bujo files.
-##custome file for note and markup for Nicholai
+## Mark colors for bujo files.
+## Task colors first so the symbol is always colored
+## key words after so they retain color
+## last comments so everying is colored out
+## '^' is start of line
+## '[[:digit:]]' is a number
+## '[[:alpha:]]' is a letter
+## '$' is end of line ??
 
 syntax "bujo" "\.?bujo$"
-comment "#"
+comment "//"
 
-# Possible errors and parameters
-icolor brightred "^[[:space:]]*((un)?(bind|set)|include|syntax|header|magic|comment|linter|formatter|i?color|extendsyntax).*$"
-
-# Keywords
-icolor brightgreen "^[[:space:]]*(set|unset)[[:space:]]+(allow_insecure_backup|atblanks|autoindent|backup|backwards|boldtext|casesensitive|constantshow|cutfromcursor|fill[[:space:]]+-?[[:digit:]]+|historylog|linenumbers|locking|morespace|mouse|multibuffer|noconvert|nohelp|nopauses|nonewlines|nowrap|positionlog|preserve|quickblank|quiet|rebinddelete|rebindkeypad|regexp|showcursor|smarthome|smooth|softwrap|suspend|tabsize[[:space:]]+[1-9][0-9]*|tabstospaces|tempfile|trimblanks|unix|view|wordbounds)\>"
-icolor yellow "^[[:space:]]*set[[:space:]]+((function|key|number|selected|status|title)color)[[:space:]]+(bright)?(white|black|red|blue|green|yellow|magenta|cyan)?(,(white|black|red|blue|green|yellow|magenta|cyan))?\>"
-icolor brightgreen "^[[:space:]]*set[[:space:]]+(backupdir|brackets|functioncolor|keycolor|matchbrackets|numbercolor|operatingdir|punct|quotestr|selectedcolor|speller|statuscolor|titlecolor|whitespace|wordchars)[[:space:]]+"
-icolor brightgreen "^[[:space:]]*bind[[:space:]]+((\^([[:alpha:]]|[]0-9\^_]|Space)|M-([[:alpha:]]|[]!"#$%&'()*+,./0-9:;<=>?@\^_`{|}~-]|Space))|F([1-9]|1[0-6])|Ins|Del)[[:space:]]+[[:alpha:]]+[[:space:]]+(all|main|search|replace(with)?|gotoline|writeout|insert|ext(ernal)?cmd|help|spell|linter|browser|whereisfile|gotodir)([[:space:]]+#|[[:space:]]*$)"
-icolor brightgreen "^[[:space:]]*unbind[[:space:]]+((\^([[:alpha:]]|[]0-9\^_]|Space)|M-([[:alpha:]]|[]!"#$%&'()*+,./0-9:;<=>?@\^_`{|}~-]|Space))|F([1-9]|1[0-6])|Ins|Del)[[:space:]]+(all|main|search|replace(with)?|gotoline|writeout|insert|ext(ernal)?cmd|help|spell|linter|browser|whereisfile|gotodir)([[:space:]]+#|[[:space:]]*$)"
-icolor brightgreen "^[[:space:]]*extendsyntax[[:space:]]+[[:alpha:]]+[[:space:]]+(i?color|header|magic|comment|linter|formatter)[[:space:]]+.*$"
-icolor brightgreen "^[[:space:]]*(linter|formatter)[[:space:]]+[[:alpha:]]+"
-icolor green "^[[:space:]]*((un)?(bind|set)|include|syntax|header|magic|comment|linter|formatter|extendsyntax)\>"
-
-# String
-color brightgreen "".+"([[:space:]]|$)"
-
-# Colors
-icolor yellow "^[[:space:]]*i?color[[:space:]]*(bright)?(white|black|red|blue|green|yellow|magenta|cyan)?(,(white|black|red|blue|green|yellow|magenta|cyan))?\>"
-icolor magenta "^[[:space:]]*i?color\>" "\<(start|end)="
-
-# Trailing whitespace
-#color ,green "[[:space:]]+$"
-# Meeting
-color brightmagenta "M .*"
-#email to be returned
-color green "@.*"
+#Meeting listed first so tasks can be placed in them and they will be 'colored' correctly
+#turns the M and the first work red, to show that is it not a date
+color red start="\M " end=" "
+# if it is a date format color green
+icolor green "^[[:space:]]*M[[:space:]]*([[:digit:]][[:digit:]]-[[:digit:]][[:digit:]]-[[:digit:]][[:digit:]][[:digit:]][[:digit:]])"
+# make the 'M' bright green
+icolor brightgreen "^[[:space:]]*M\>" "\<(start|end)="
 
 # task
-color yellow "\* .*"
+color brightred "^\* "
+color brightred " \* "
 # low priority task
-color red "\*l .*"
+color magenta "\*l"
 # important
-color brightred "! .*"
-
+color brightyellow "! .*"
 # explore
-color cyan "\?:.*"
+color cyan "^\? .*"
+#email to be returned
+icolor green "^@"
 
-# schedule future
-color brightblack ">>.*"
+# Highlights a contact
+icolor cyan "@[[:alpha:]].* "
+
+# Migrated forward
+color black ">>.*"
+color brightblack ">>"
+color blue start=">>>" end=">>>"
+
 # delageted
 color brightblack "<<.*"
-color blue start="<<" end="<<"
+color cyan start="<<" end="<<"
+
 # completed
+color brightblack "^X.*"
 color brightblack "X .*"
 color brightblack "X\*.*"
 color brightblack "X\!.*"
 color brightblack "X	.*"
+color black "CX.*"
+color brightblack "CX"
 
-color black "CX .*"
-color magenta "CX"
-
-#commented multiline
+# Highlight Dates
 color brightgreen start="===" end="==="
-
-#commented multiline
-color white start="//" end="//"
-
-color yellow start="\{" end="\}"
 
 # Comments
 color cyan "(^|[[:space:]]+)#.*$"
-color brightblue "^[[:space:]]*##.*$"
+#color brightblue "^[[:space:]]*##.*$"
+
+# Trailing whitespace
+#color ,green "[[:space:]]+$"
+
+
+# Unused, saved for example
+
+# String
+color white "".+"([[:space:]]|$)"
+
+#commented multiline
+#color yellow start="\{" end="\}"
+
+# Keywords
+#icolor brightgreen "^[[:space:]]*(set|unset)[[:space:]]+(allow_insecure_backup|atblanks|autoindent|backup|backwards|boldtext|casesensitive|constantshow|cutfromcursor|fill[[:space:]]+-?[[:digit:]]+|historylog|linenumbers|locking|morespace|mouse|multibuffer|noconvert|nohelp|nopauses|nonewlines|nowrap|positionlog|preserve|quickblank|quiet|rebinddelete|rebindkeypad|regexp|showcursor|smarthome|smooth|softwrap|suspend|tabsize[[:space:]]+[1-9][0-9]*|tabstospaces|tempfile|trimblanks|unix|view|wordbounds)\>"
+#icolor yellow "^[[:space:]]*set[[:space:]]+((function|key|number|selected|status|title)color)[[:space:]]+(bright)?(white|black|red|blue|green|yellow|magenta|cyan)?(,(white|black|red|blue|green|yellow|magenta|cyan))?\>"
+#icolor brightgreen "^[[:space:]]*set[[:space:]]+(backupdir|brackets|functioncolor|keycolor|matchbrackets|numbercolor|operatingdir|punct|quotestr|selectedcolor|speller|statuscolor|titlecolor|whitespace|wordchars)[[:space:]]+"
+#icolor brightgreen "^[[:space:]]*bind[[:space:]]+((\^([[:alpha:]]|[]0-9\^_]|Space)|M-([[:alpha:]]|[]!"#$%&'()*+,./0-9:;<=>?@\^_`{|}~-]|Space))|F([1-9]|1[0-6])|Ins|Del)[[:space:]]+[[:alpha:]]+[[:space:]]+(all|main|search|replace(with)?|gotoline|writeout|insert|ext(ernal)?cmd|help|spell|linter|browser|whereisfile|gotodir)([[:space:]]+#|[[:space:]]*$)"
+#icolor brightgreen "^[[:space:]]*unbind[[:space:]]+((\^([[:alpha:]]|[]0-9\^_]|Space)|M-([[:alpha:]]|[]!"#$%&'()*+,./0-9:;<=>?@\^_`{|}~-]|Space))|F([1-9]|1[0-6])|Ins|Del)[[:space:]]+(all|main|search|replace(with)?|gotoline|writeout|insert|ext(ernal)?cmd|help|spell|linter|browser|whereisfile|gotodir)([[:space:]]+#|[[:space:]]*$)"
+#icolor brightgreen "^[[:space:]]*extendsyntax[[:space:]]+[[:alpha:]]+[[:space:]]+(i?color|header|magic|comment|linter|formatter)[[:space:]]+.*$"
+#icolor brightgreen "^[[:space:]]*(linter|formatter)[[:space:]]+[[:alpha:]]+"
+#icolor green "^[[:space:]]*((un)?(bind|set)|\*|syntax|header|magic|comment|linter|formatter|extendsyntax)\>"
+
+# example of highliting AFTER a keywork
+icolor brightred "^[[:space:]]*((un)?(bind|set)|include|syntax|header|magic|comment|linter|formatter|i?color|extendsyntax).*$"
+# Colors, "icolor" or color" is magenta and the color is yellow
+icolor yellow "^[[:space:]]*i?color[[:space:]]*(bright)?(white|black|red|blue|green|yellow|magenta|cyan)?(,(white|black|red|blue|green|yellow|magenta|cyan))?\>"
+icolor magenta "^[[:space:]]*i?color\>" "\<(start|end)="
+
+
+#strings (no multiline handling yet)
+#color brightblack ""[^\"]*""
