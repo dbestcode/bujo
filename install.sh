@@ -1,15 +1,14 @@
 #/bin/bash
-# a very simple instal script for bujo
+# a very simple install script for bujo
 
 # make .bujo dir and add files
 echo "Adding ~/.bujo/" to home dir.
 mkdir -p ~/.bujo/
 cp -v todo.bujo ~/.bujo/
 cp -v daily.bujo ~/.bujo/
-cp -v example.bujo ~/.bujo
 
 # add the bujo nano config file to system for color
-echo "Adding .bujo color scheme to nano"
+echo "Adding .bujo color scheme to nano(sudo required)"
 cp -v bujo.nanorc /usr/share/nano
 
 # copy man entry
