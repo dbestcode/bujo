@@ -6,7 +6,8 @@
 ## '[[:digit:]]' is a number
 ## '[[:alpha:]]' is a letter
 ## '$' is end of line ??
-
+## '.' is wildcard
+## '*' is append
 syntax "bujo" "\.?bujo$"
 comment "//"
 
@@ -18,20 +19,23 @@ icolor green "^[[:space:]]*M[[:space:]]*([[:digit:]][[:digit:]]-[[:digit:]][[:di
 # make the 'M' bright green
 icolor brightgreen "^[[:space:]]*M\>" "\<(start|end)="
 
+# important
+color brightyellow "! .*"
+
 # task
 color brightred "^\* "
 color brightred " \* "
 # low priority task
 color magenta "\*l"
-# important
-color brightyellow "! .*"
 # explore
 color cyan "^\? .*"
 #email to be returned
 icolor green "^@"
 
 # Highlights a contact
-icolor cyan "@[[:alpha:]].* "
+icolor cyan "@[[:alpha:]].*\."
+#color yellow "[[:space:]](\\.|[^"])*""
+#icolor red start=" " end="@"
 
 # Migrated forward
 color black ">>.*"
@@ -81,11 +85,10 @@ color white "".+"([[:space:]]|$)"
 #icolor green "^[[:space:]]*((un)?(bind|set)|\*|syntax|header|magic|comment|linter|formatter|extendsyntax)\>"
 
 # example of highliting AFTER a keywork
-icolor brightred "^[[:space:]]*((un)?(bind|set)|include|syntax|header|magic|comment|linter|formatter|i?color|extendsyntax).*$"
+#icolor brightred "^[[:space:]]*((un)?(bind|set)|include|syntax|header|magic|comment|linter|formatter|i?color|extendsyntax).*$"
 # Colors, "icolor" or color" is magenta and the color is yellow
-icolor yellow "^[[:space:]]*i?color[[:space:]]*(bright)?(white|black|red|blue|green|yellow|magenta|cyan)?(,(white|black|red|blue|green|yellow|magenta|cyan))?\>"
-icolor magenta "^[[:space:]]*i?color\>" "\<(start|end)="
-
+#icolor yellow "^[[:space:]]*i?color[[:space:]]*(bright)?(white|black|red|blue|green|yellow|magenta|cyan)?(,(white|black|red|blue|green|yellow|magenta|cyan))?\>"
+#icolor magenta "^[[:space:]]*i?color\>" "\<(start|end)="
 
 #strings (no multiline handling yet)
 #color brightblack ""[^\"]*""

@@ -10,14 +10,15 @@ new_day(){
 	echo "Starting new day..."
 	echo "Migrating unfinshed tasks..."
 	# make a new /tmp/Migration.bujo file
+	# find all import tasks in todo, append them to a tmp file
 	echo "# Review these items" >>/tmp/Migration.bujo
 	echo "# Lines with starting with '#' will be removed" >>/tmp/Migration.bujo
-	# find all import tasks in todo, append them to a tmp file
 	grep '^* '   ~/.bujo/todo.bujo |sort -d >>/tmp/Migration.bujo
 	grep '^! '   ~/.bujo/todo.bujo |sort -d >>/tmp/Migration.bujo
 	grep '^@'   ~/.bujo/todo.bujo |sort -d >>/tmp/Migration.bujo
 	grep "^M `date +%m-%d-%Y`" ~/.bujo/todo.bujo |sort -d >>/tmp/Migration.bujo
 	grep ">>>`date +%m-%d-%Y`>>>" ~/.bujo/todo.bujo |sort -d >>/tmp/Migration.bujo
+
 	# show tmpfile for review
 	nano /tmp/Migration.bujo
 
@@ -61,6 +62,7 @@ print_all(){
 	echo "Future Tasks:"
 	grep "^>>>" ~/.bujo/todo.bujo
 }
+
 print_summary(){
 	echo "Summary `date +%m-%d-%Y`:"
 	grep '^! ' ~/.bujo/todo.bujo |sort -d > /tmp/bujotmp
@@ -101,9 +103,80 @@ print_summary(){
 	tput sgr0
 }
 
+print_help(){
+	echo "Invalid option -$OPTARG" >&2
+	echo "Usage: bujo.sh [OPTION]"
+	echo " use no option to open journal"
+	echo
+	echo " -b	add to todo list"
+	echo " 	bujo -b '* a new task'"
+	echo 
+	echo " -s	print summary"
+	echo " -a	print all tasks"
+	echo
+	echo " -i	print ! tasks"
+	echo " -t	print * tasks"
+	echo " -l	print *l tasks"
+	echo " -m	print meetings"
+	echo " -E	print things to be explored"
+	echo " -e	print emails"
+	echo
+	echo " -n	start new day"
+	echo " -d 	edit daily tasks"
+	echo " -H 	open the entire 'todo' file"
+	echo
+	echo " -h	print this text"
+	echo " -x 	open example tutoriral"
+}
+
+migrate(){
+# pushes down everying sorting by task
+	# grab every thing after the last '==='
+	tac ~/.bujo/todo.bujo | awk '!flag; /===/{flag = 1};' | tac > /tmp/today.bujo
+
+	#grab tasks and add to a new file
+	grep '^! '  /tmp/today.bujo |sort -d >>/tmp/today1.bujo
+	grep '^* '  /tmp/today.bujo |sort -d >>/tmp/today1.bujo
+	grep '^@'   /tmp/today.bujo |sort -d >>/tmp/today1.bujo
+	grep '^M ' /tmp/today.bujo |sort -d >>/tmp/today1.bujo
+	grep "^>>>" /tmp/today.bujo |sort -d >>/tmp/today1.bujo
+	#makr them as miragted in the 1st file
+	sed -i 's/^* />>* /' /tmp/today.bujo
+	sed -i 's/^! />>! /' /tmp/today.bujo
+	sed -i 's/^@/>>@/'  /tmp/today.bujo
+	sed -i 's/^M/>>M/'  /tmp/today.bujo
+	# add file 2 to file1 now order by task
+
+	echo '====sorted===' >> /tmp/today.bujo
+	cat /tmp/today1.bujo >> /tmp/today.bujo
+
+	# Edit 'today'
+#	nano /tmp/today.bujo
+	# copy only everything before the last '===' in to a tmp file
+	# over write makin todo and add newly edited day
+	tac ~/.bujo/todo.bujo |sed '1,/===/d'|tac > /tmp/tmp1.bujo
+	cat /tmp/tmp1.bujo > ~/.bujo/todo.bujo
+	cat /tmp/today.bujo >> ~/.bujo/todo.bujo
+	#remove tmp files
+	rm /tmp/today.bujo
+	rm /tmp/today1.bujo
+	rm /tmp/tmp1.bujo
+
+	#move low priority tasks and exploratory from entire todo list to bottom of list
+	# put in a tmp file
+	grep '^*l ' ~/.bujo/todo.bujo|sort -d > /tmp/bujotmp
+	grep '^? ' ~/.bujo/todo.bujo|sort -d >> /tmp/bujotmp
+	#remove entries from above and append tmp file to todo list
+	sed -i 's/^*l />>*l /' ~/.bujo/todo.bujo
+	sed -i 's/^? />>? /' ~/.bujo/todo.bujo
+	cat /tmp/bujotmp >>  ~/.bujo/todo.bujo
+	rm /tmp/bujotmp
+	
+	nano +9999 ~/.bujo/todo.bujo
+}
 
 if [ -n "$1" ]; then
-while getopts "baitlnEmxHdes" opt; do
+while getopts "baitlnEmMxHdes" opt; do
   case $opt in
     n)
 	new_day
@@ -156,30 +229,11 @@ while getopts "baitlnEmxHdes" opt; do
     s)
 	print_summary
     ;;
+    M)
+	migrate
+    ;;
     \?)
-	echo "Invalid option -$OPTARG" >&2
-	echo "Usage: bujo.sh [OPTION]"
-	echo " use no option to open journal"
-	echo
-	echo " -b	add to todo list"
-	echo " 	bujo -b '* a new task'"
-	echo 
-	echo " -s	print summary"
-	echo " -a	print all tasks"
-	echo
-	echo " -i	print ! tasks"
-	echo " -t	print * tasks"
-	echo " -l	print *l tasks"
-	echo " -m	print meetings"
-	echo " -E	print things to be explored"
-	echo " -e	print emails"
-	echo
-	echo " -n	start new day"
-	echo " -d 	edit daily tasks"
-	echo " -H 	open the entire 'todo' file"
-	echo
-	echo " -h	print this text"
-	echo " -x 	open example tutoriral"
+	print_help
     ;;
   esac
 done
@@ -187,6 +241,8 @@ done
 else
 	# grab every thing after the last '==='
 	tac ~/.bujo/todo.bujo | awk '!flag; /===/{flag = 1};' | tac > /tmp/today.bujo
+
+	# Edit 'today'
 	nano /tmp/today.bujo
 	# copy only everything before the last '===' in to a tmp file
 	# over write makin todo and add newly edited day

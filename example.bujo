@@ -1,14 +1,12 @@
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~		Bujo demostration file			     ~
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Bujo Demonstration file
 This is an example file for the bullet journal format for nano.
 This example is temporay file and will not change, so feel 
 free to experiment. Next time 'bujo -x' is run all info found
 here will be the same.  
 
-Attemped the following exersizes where you see: "===TRY IT==="
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-			Overview
+Attemped the following exersizes where you see: ===TRY IT===
+
+## Overview
 
 In a tradional bullet journal a symbol in front of the line denotes 
 what it is for easy reading.  The difference in the '.bujo' files 
@@ -17,32 +15,32 @@ make it fast and easy to look over what you have done and what
 you have left todo.  Using the 'bujo' command will give you 
 access to the main task list, but any file that uses the .bujo
 extension will follow most of the rules you will see below.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-			Tasks
+
+## Tasks
 
 There are 6 types of tasks:
-1) 
-! Important tasks
+1. Important tasks  
+	'! Important task'  
 	This desination is for things that need done ASAP, if
 	it is a must-do.
-2) 
-* Normal tasks
+2. Normal tasks  
+	'* Normal task'  
 	For anything that needs done in the next few days.
-3) 
-*l low priority tasks
+3) Low priority tasks  
+	'*l low priority task'  
 	This is for things that dont need done right away, 
 	but you still need to make it happen. If you can put 
 	it off a few days or a week use this one.
-4) 
-? Idea or exploratory
+4. Idea or explore later  
+	'? Idea or exploratory'  
 	These are not nessisarily tasks, maybe an idea you want to
 	come back to later, or some thing you want to check out 
 	some other time like a podcast someone told you about
 	or a song you heard on the radio, or a project for work 
 	that would be good during some down time.
 
-===TRY IT===
--Color code the following tasks
+===TRY IT===  
+Color code the following tasks
 
 Make me a normal task.
 Make me important, this you want to take care of soon!
@@ -51,12 +49,11 @@ I am not an important task
 
 There is also a meeting and email color by using the 'M' or '@'
 at the start of a line with or without a date, more on that later...
-M 01-01-2020 Coffee w/ dave
-M Coffee w/ dave
-@ respond to @Laura 
+M 01-01-2020 Coffee @dave.
+M Coffee @Dave.
+@ respond to @Laura.
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-			Completeing or Canceling tasks
+## Completeing or Canceling tasks
 
 When you complete a task, simple put an 'X' in front of the line
 Complete the finshed tasks
@@ -79,47 +76,59 @@ If you need to read it, delete the 'C' to reveal it.
 CX * Nothing very imporant but now you know and I wasnt a distraction
 
 Color syntax can also be turned off in nano by pressing 'ALT + Y'
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-			Email Handling
 
-bujo has a coding system for emails to see what you have answered
+## Email Handling
+
+Bujo has a coding system for emails to see what you have answered
 and what you need to complete and who you are waiting on answering you.
 This can be very helpful if you send a lot of emails and are waiting
 on replies.
 
-It works in the following 3 stages:
+It works in 3 stages:
 
-Step 1. Email needs composed
-	This is how you denote that you need to send an email to someone
-Put the name first with the "@" sign, it lets you know its an email or 
-you can use it for a way to highlight @names as it will only highlight 
-a single @ word rather than the whole line.
+1. Email needs composed
 
-Put any task after that, it can be high prioity or normal.  
+	To denote that you need to send an email to someone,
+	Put the "@" sign at the being of a line and follow with a contaccnt, 
+	it lets you know its an email. Put any task after that, it can be high prioity or normal.  
 
+	Need to send example:
 @ JohnD * Do you have grapes?
-or
+	or
 @ JohnD ! Do you have grapes?!
 
-Step 2. Waiting on a response
-	When you send the email use 'X' on just the task.  This 
-will grey the task, so you know it has been done, but when you look 
-back through and you see a green recipient, you know they 
-have not responded to YOU.
-Ex2. @JohnD X * Do you have grapes?
+2. Waiting on a response
 
-Step 3. Completed Email
+	When you send the email use 'X' on just the task.  This 
+	will grey the task, so you know it has been done, but when you look 
+	back through and you see a green recipient, you know they 
+	have not responded to you.
+
+	Email sent example:
+@ JohnD X * Do you have grapes?
+
+3. Completed Email Chain
 	Once you have your answer you can grey out the whole thing.
-Make sure you leave a note of what the reposnse was
-Ex3. X @JohnD * Do you have grapes? - he does not
+	Make sure you leave a note of what the reposnse was
+
+	Complete example :
+X @JohnD * Do you have grapes? - he does not
 
 ===TRY IT===
 Edit below to show you need to send an email to Nancy 
 and ask about oranges.  Once you edit it see how it comments out
 @ Name * email content
 
+### Contacts
+
+The '@' symbol can also be used to highlight persons in a task.
+It is used by staring with @ and ending with a '.'
+
+	example:
+* Car needs inspected, call @Tyrone M. about insurance before 
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-			Migration
+## Migration
 
 Migration is how you keep track of what you have done day-to-day.
 
@@ -134,7 +143,7 @@ Migrate this task
 * migrate me!
 >> * migrated task
 
-The tasks that are mirgrated are hidden, you can still see what you 
+The tasks that are migrated are hidden, you can still see what you 
 had planed if you remove the arrows, but they wont stand out.  
 Migration is important becasue it can show priority, and keep 
 the important item at the foreforut of attention.  If tasks get 
@@ -146,24 +155,22 @@ Mark it complete when they are done.
 X <<John D<< *delgated example to John
 
 ===TRY IT=== Assign this to Jamie and see it change
-* This task should be done by Jamie
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-			Start a new day
+## Start a new day
 
 The 'new day' function or 'bujo -n' is important for managing 
 long term workflow.  Running new day does three things.
 
-1) It adds a date stamp at the bottom of you journal, that way 
+1. It adds a date stamp at the bottom of you journal, that way 
 you know you are working on tasks on a particular date looking back
 
-2) It migrates your old tasks forward.  When you start a 
+2. It migrates your old tasks forward.  When you start a 
 'new day' you will see a list of everything incomplete
 so you can review what you need to do for the day. 
 Once you have started a new day you will need to mark the tasks
 above as mirgrated so you know that you put them off a day.
 
-Ony Some tasks will migrate forward,  bujo will show you a 
+Only some tasks will migrate forward,  bujo will show you a 
 list of any tasks that are left incomplete if they are:
 * normal tasks
 and ! important tasks 
@@ -178,10 +185,12 @@ but you can view them with 'bujo -E'
 These are tasks you need to do every single days.  The list
 can be edited in "~./bujo/daily.bujo" or by useing 'bujo -d'
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+You can also force a migration of all tasks with the 
+bujo -M 
 
-			Scheduleing & Meetings
-//Scheduling task is nice when you have things that dont need 
+## Scheduleing & Meetings
+
+Scheduling task is nice when you have things that dont need 
 attention till later.  Mark the date in front of the task using
 useing
 
@@ -204,4 +213,3 @@ can still make a meeting on the day of without a date.
 M Fight Club
 NOTE: If the date is not in MM-DD-YYYY, 
 it will never move forward hence the different highlight
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
