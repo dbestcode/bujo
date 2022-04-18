@@ -11,6 +11,8 @@ just read the install and put the files in yourself!
 
 Run 'bujo -x' to run the tutorial program
 
+## Help File
+```sh
 Usage: bujo.sh [OPTION]
 
  -n	start new day and migration
@@ -31,3 +33,4 @@ Usage: bujo.sh [OPTION]
  -b	bujo -b [task] adds task without opening nano
 
  -h	print this text
+```
