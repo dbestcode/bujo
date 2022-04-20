@@ -8,7 +8,7 @@ cp -v todo.bujo ~/.bujo/
 cp -v daily.bujo ~/.bujo/
 
 # add the bujo nano config file to system for color
-echo "Adding .bujo color scheme to nano(sudo required)"
+echo "Adding .bujo color scheme to nano"
 cp -v bujo.nanorc /usr/share/nano
 
 # copy man entry

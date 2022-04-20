@@ -2,29 +2,36 @@
 ## Task colors first so the symbol is always colored
 ## key words after so they retain color
 ## last comments so everying is colored out
+
+## regex overview
 ## '^' is start of line
+## '$' is end of line
 ## '[[:digit:]]' is a number
 ## '[[:alpha:]]' is a letter
-## '$' is end of line ??
 ## '.' is wildcard
-## '*' is append
+## '*' 0 or more of the previous char
+## '+' 1 or more of the previous char
+
 syntax "bujo" "\.?bujo$"
 comment "//"
 
 #Meeting listed first so tasks can be placed in them and they will be 'colored' correctly
-#turns the M and the first work red, to show that is it not a date
-color red start="\M " end=" "
-# if it is a date format color green
-icolor green "^[[:space:]]*M[[:space:]]*([[:digit:]][[:digit:]]-[[:digit:]][[:digit:]]-[[:digit:]][[:digit:]][[:digit:]][[:digit:]])"
-# make the 'M' bright green
-icolor brightgreen "^[[:space:]]*M\>" "\<(start|end)="
+#1 Turns the M and the first word red to assume error
+color red start="^M " end=" "
 
-# important
+#2 date format made green, if not found it remains red
+icolor green "^M[[:space:]]*([[:digit:]][[:digit:]]-[[:digit:]][[:digit:]]-[[:digit:]][[:digit:]][[:digit:]][[:digit:]])"
+
+#3 make the 'M' bright green regardless
+icolor brightgreen "^M\>"
+
+# important task
 color brightyellow "! .*"
 
 # task
 color brightred "^\* "
 color brightred " \* "
+
 # low priority task
 color magenta "\*l"
 # explore
@@ -33,25 +40,23 @@ color cyan "^\? .*"
 icolor green "^@"
 
 # Highlights a contact
-icolor cyan "@[[:alpha:]].*\."
-#color yellow "[[:space:]](\\.|[^"])*""
-#icolor red start=" " end="@"
+icolor magenta "@[[:alpha:]]*\>"
+# Highlights an email
+icolor brightmagenta "\<([[:alnum:]]|-)*@([[:alnum:]]|-|\.)*\>"
 
 # Migrated forward
 color black ">>.*"
 color brightblack ">>"
-color blue start=">>>" end=">>>"
 
 # delageted
 color brightblack "<<.*"
 color cyan start="<<" end="<<"
 
-# completed
+# Completed tasks
+color brightblack "^x.*"
 color brightblack "^X.*"
-color brightblack "X .*"
-color brightblack "X\*.*"
-color brightblack "X\!.*"
-color brightblack "X	.*"
+color brightblack "\<x .*"
+color brightblack "\<X .*"
 color black "CX.*"
 color brightblack "CX"
 
@@ -59,7 +64,7 @@ color brightblack "CX"
 color brightgreen start="===" end="==="
 
 # Comments
-color cyan "(^|[[:space:]]+)#.*$"
+color brightblack "(^|[[:space:]]+)#.*$"
 #color brightblue "^[[:space:]]*##.*$"
 
 # Trailing whitespace

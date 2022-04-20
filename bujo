@@ -1,12 +1,18 @@
 #!/bin/bash
 # File: bujo.sh
 # Date: 4.14.2022
-# Desc: Task Organization Script
-# author:nicholai.best@gmail.com
+# Desc: Task Organization Script & Syntax
+# Author: nicholai.best@gmail.com
+#
+# Support files:
+# ~/.bujo/todo.bujo           -Main task list that items are added to and completed
+# ~/.bujo/daily.bujo          -List of tasks add to one's daily list, edit with 'bujo -d'
+# /usr/share/nano/bujo.nanorc -syntax file that defines colring for .bujo files
 
 make_example_file(){
-
-cat << eof > /tmp/example.bujo
+# Creates a files in /tmp for editing that contains basic
+# examples of the bujo syntax
+    cat << eof > /tmp/example.bujo
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~		Bujo demostration file			     ~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -207,7 +213,7 @@ eof
 print_help(){
 #Prints help text
 	echo "Invalid option -$OPTARG" >&2
-cat << eof
+    cat << eof
 Usage: bujo.sh [OPTION]
 use no option to open journal
 
@@ -243,13 +249,13 @@ new_day(){
 	# find all import tasks in todo, append them to a tmp file
 	echo "# Review these items" >>/tmp/Migration.bujo
 	echo "# Lines with starting with '#' will be removed" >>/tmp/Migration.bujo
-	grep '^* '   ~/.bujo/todo.bujo |sort -d >>/tmp/Migration.bujo
 	grep '^! '   ~/.bujo/todo.bujo |sort -d >>/tmp/Migration.bujo
+	grep '^* '   ~/.bujo/todo.bujo |sort -d >>/tmp/Migration.bujo
 	grep '^@'   ~/.bujo/todo.bujo |sort -d >>/tmp/Migration.bujo
 	grep "^M `date +%m-%d-%Y`" ~/.bujo/todo.bujo |sort -d >>/tmp/Migration.bujo
 	grep ">>>`date +%m-%d-%Y`>>>" ~/.bujo/todo.bujo |sort -d >>/tmp/Migration.bujo
 
-	# show tmpfile for review
+	# Open migration file for review
 	nano /tmp/Migration.bujo
 
 	#migrate all tasks left undone before today, mark them with >> to grey them out
@@ -257,7 +263,7 @@ new_day(){
 	sed -i 's/^! />>! /' ~/.bujo/todo.bujo
 	sed -i 's/^@/>>@/' ~/.bujo/todo.bujo
 
-	#add new date
+	# Add new date to main todo file
 	echo -n "===`date +%m-%d-%Y`" >> ~/.bujo/todo.bujo
 	echo "===" >> ~/.bujo/todo.bujo
 	#Copy migrating items to todo.bujo
