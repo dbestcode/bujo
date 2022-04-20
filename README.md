@@ -1,16 +1,37 @@
-# Bullet Journal
+# Bullet Journal (bujo)
+for linux  
 
-Writen by ndbest
+Written by N. Best
 
-Bullet Journal(bujo) is a simple bash linux script with a few support files.  It is designed to be a
-bare bones digital equvilant of a bullet journal for terminal.  It automatically color
-codes items based on syntax and can migrate tasks and meetings based on the date.
+A traditional bullet journal is basically a syntax used in a notebook to keep track of daily items and see your progress at a glance.  'bujo' consists of a nano syntax file and a simple bash script with a few support files.  It is designed to be a bare bones digital equivalent of a bullet journal for terminal.  Using a very minimal markup syntax, it  color codes items based on symbol at the beginning of a line like the traditional paper version.  The script can also can migrate tasks and meetings based on the date.
 
-Download the zip file, and run 'sudo ./install.sh' to setup or
-just read the install and put the files in yourself!
+### Installation 
 
-Run 'bujo -x' to run the tutorial program
+Download the zip file, and run the following commands or read the install.sh file and place the files.
 
+```sh
+unzip bujo-main.zip
+cd bujo-main/
+./install.sh'
+```
+
+
+Once installed run :
+```
+'bujo -x'
+``` 
+to run the tutorial program, it will guide the user through the syntax and how it is used.  Running the 'bujo' script will open a continual 'todo.bujo' file while will serve as a daily journal, but the bujo.nanorc file is installed, it will color code any *.bujo file on ones system.  This can be helpful if you need 'todo' lists in different directories to keep track of files.
+
+## Syntax overview
+A few of the symbols to color code 'bujo' lists.  Many more are available if you check out the tutorial.
+```
+* Normal task
+! Important task
+M Meeting
+@ Email to be answered
+X* Completed task
+CX* Canceled task
+```
 ## Help File
 ```sh
 Usage: bujo.sh [OPTION]
