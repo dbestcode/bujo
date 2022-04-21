@@ -48,6 +48,11 @@ icolor brightmagenta "\<([[:alnum:]]|-)*@([[:alnum:]]|-|\.)*\>"
 color black ">>.*"
 color brightblack ">>"
 
+#schedule forward
+color brightblack ">>>.*$"
+color red "^>>>"
+color green "^>>>([[:digit:]][[:digit:]]-[[:digit:]][[:digit:]]-[[:digit:]][[:digit:]][[:digit:]][[:digit:]])>>>"
+
 # delageted
 #color cyan start="<<" end="<<"
 color brightblack "<<.*$"
