@@ -35,7 +35,7 @@ color brightred " \* "
 # low priority task
 color magenta "\*l"
 # explore
-color cyan "^\? .*"
+color cyan "^\? .*$"
 #email to be returned
 icolor green "^@"
 
@@ -49,8 +49,9 @@ color black ">>.*"
 color brightblack ">>"
 
 # delageted
-color brightblack "<<.*"
-color cyan start="<<" end="<<"
+#color cyan start="<<" end="<<"
+color brightblack "<<.*$"
+color cyan "^<<.*<<"
 
 # Completed tasks
 color brightblack "^x.*"
