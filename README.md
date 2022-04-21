@@ -10,9 +10,11 @@ A traditional bullet journal is basically a syntax used in a notebook to keep tr
 Download the zip file, and run the following commands or read the install.sh file and place the files.
 
 ```sh
+sudo apt install nano
 unzip bujo-main.zip
 cd bujo-main/
 ./install.sh'
+sudo cp bujo.nanorc /usr/share/nano
 ```
 
 
