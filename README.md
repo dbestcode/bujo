@@ -1,26 +1,36 @@
 # Bullet Journal (bujo)
-for linux  
-
-Written by N. Best
+---
 
 A traditional bullet journal is basically a syntax used in a notebook to keep track of daily items and see your progress at a glance.  'bujo' consists of a nano syntax file and a simple bash script with a few support files.  It is designed to be a bare bones digital equivalent of a bullet journal for terminal.  Using a very minimal markup syntax, it  color codes items based on symbol at the beginning of a line like the traditional paper version.  The script can also can migrate tasks and meetings based on the date.
 
-### Installation 
+### dependencies
+---
+* ```nano```
 
-Download the zip file, and run the following commands or read the install.sh file and place the files.
+
+### installation
+---
+
+Download the repo file, and run the following commands or read the install.sh file and place the files.
 
 ```sh
+#install nano if your system doesn't have it
 sudo apt install nano
-unzip bujo-main.zip
-cd bujo-main/
-./install.sh'
+#clone repo
+git clone https://github.com/dbestcode/bujo.git
+#enter directory
+cd bujo/
+# run install script
+./install.sh
+#place the .nanorc file
 sudo cp bujo.nanorc /usr/share/nano
 ```
 
-
+## getting started
+---
 Once installed run :
 ```
-'bujo -x'
+bujo -x
 ``` 
 to run the tutorial program, it will guide the user through the syntax and how it is used.  Running the 'bujo' script will open a continual 'todo.bujo' file while will serve as a daily journal, but the bujo.nanorc file is installed, it will color code any *.bujo file on ones system.  This can be helpful if you need 'todo' lists in different directories to keep track of files.
 
@@ -35,6 +45,7 @@ X* Completed task
 CX* Canceled task
 ```
 ## Help File
+---
 ```sh
 Usage: bujo.sh [OPTION]
 
