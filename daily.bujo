@@ -1,4 +1,7 @@
-#Daily List
+# Daily List, tasks added to you routine everytime you run the new day command
+# bujo -n
+# All items with '#' in front are comments and are not added to the todo list
+# Run bujo -d to edit this list
 *l Brush your teeth
 ! Check email
 * Other tasks done daily

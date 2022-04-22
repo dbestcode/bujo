@@ -250,12 +250,15 @@ new_day(){
 # Copy forward all unfinshed tasks to end of todo file
     MASTERLIST="$HOME/.bujo/todo.bujo"
 	echo "Starting new day..."
+	sleep .2
 	echo "Migrating unfinshed tasks..."
+	sleep .2
 	# make a new /tmp/Migration.bujo file
 	# find all import tasks in todo, append them to a tmp file
 	{
-       	echo "# Review these items"
-    	echo "# Lines with starting with '#' will be removed"
+       	echo "# === Migrated items ==="
+       	echo "# Edit or removed item you need changed"
+    	echo "# Lines with starting with '#' are ignored"
     	grep '^! ' "$MASTERLIST" |sort -d
     	grep '^* ' "$MASTERLIST" |sort -d
     	grep '^@'  "$MASTERLIST" |sort -d

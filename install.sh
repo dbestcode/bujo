@@ -8,14 +8,24 @@ echo "Adding: ~/.bujo/"
 sleep .2
 echo "Adding: ~/.bujo/daily.bujo"
 mkdir -p ~/.bujo/
-cp daily.bujo ~/.bujo/
 
-FILE=~/.bujo/todo.bujo
+FILE="$HOME/.bujo/daily.bujo"
+# if 'daily.bujo' file does not exist, add it other wise do nothing
 if [ -f "$FILE" ]; then
-    echo "Master 'todo.bujo' file found!"
+    echo "$FILE found!"
     sleep .5
 else
-    cp todo.bujo $FILE
+    cp daily.bujo "$FILE"
+    echo "Adding: ~/.bujo/todo.bujo"
+fi
+
+FILE="$HOME/.bujo/todo.bujo"
+# if 'todo.bujo' file does not exist, add it other wise do nothing
+if [ -f "$FILE" ]; then
+    echo "$FILE found!"
+    sleep .5
+else
+    cp todo.bujo "$FILE"
     echo "Adding: ~/.bujo/todo.bujo"
 fi
 
@@ -32,10 +42,10 @@ cp bujo "$HOME/bin"
 echo "Adding: ~/bin/ to PATH"
 sleep .5
 {
-echo 'if [ -d "$HOME/bin" ] ; then'
-echo 'PATH="$HOME/bin:$PATH"'
-echo 'fi'
-} >> ~/.bashrc
+    echo 'if [ -d "$HOME/bin" ] ; then'
+    echo 'PATH="$HOME/bin:$PATH"'
+    echo 'fi'
+} >> "$HOME/.bashrc"
 
 
 # Add the bujo nano config file to system for color
