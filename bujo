@@ -10,8 +10,8 @@
 # /usr/share/nano/bujo.nanorc -syntax file that defines colring for .bujo files
 
 make_example_file(){
-# Creates a files in /tmp for editing that contains basic
-# examples of the bujo syntax
+    # Creates a files in /tmp for editing that contains basic
+    # examples of the bujo syntax
     cat << eof > /tmp/example.bujo
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~		Bujo demostration file			     ~
@@ -259,11 +259,18 @@ new_day(){
        	echo "# === Migrated items ==="
        	echo "# Edit or removed item you need changed"
     	echo "# Lines with starting with '#' are ignored"
-    	grep '^! ' "$MASTERLIST" |sort -d
+       	echo "# complete or change to a normal task"
     	grep '^* ' "$MASTERLIST" |sort -d
     	grep '^@'  "$MASTERLIST" |sort -d
     	grep "^M $(date +%m-%d-%Y)" "$MASTERLIST" |sort -d
     	grep ">>>$(date +%m-%d-%Y)>>>" "$MASTERLIST" |sort -d
+        # if any important item let use know they should be taken care of
+        if grep -q  '^! ' "$MASTERLIST" ;then
+       	    echo "! --- Important items left in list --- !!!(Delete me)"
+       	    echo "# Triage items below to normal or complete soon"
+    	    grep '^! ' "$MASTERLIST" |sort -d
+        fi
+
     } >> /tmp/Migration.bujo
 	# Open migration file for review
 	nano /tmp/Migration.bujo
