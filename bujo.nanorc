@@ -20,7 +20,7 @@ comment "//"
 color red start="^M " end=" "
 
 #2 date format made green, if not found it remains red
-icolor green "^M[[:space:]]*([[:digit:]][[:digit:]]-[[:digit:]][[:digit:]]-[[:digit:]][[:digit:]][[:digit:]][[:digit:]])"
+icolor green "^M[[:space:]]*([[:digit:]][[:digit:]]-[[:digit:]][[:digit:]]-[[:digit:]][[:digit:]][[:digit:]][[:digit:]])[[:space:]]*[[:digit:]][[:digit:]][[:digit:]][[:digit:]]"
 
 #3 make the 'M' bright green regardless
 icolor brightgreen "^M\>"
